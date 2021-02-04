@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoamilocal
+  labels:
+    app: whoamilocal
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whoamilocal
+  template:
+    metadata:
+      labels:
+        app: whoamilocal
+    spec:
+      containers:
+      - name: whoamilocal
+        image: traefik/whoami
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: whoami
+  namespace: new-who
+spec:
+  ports:
+  - port: 80
+    name: web
+    protocol: TCP
+  selector:
+    app: whoami
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami-web
+  namespace: new-who
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`mydomain.com`) && PathPrefix(`/`)
+    services:
+    - name: whoami
+      port: 80
